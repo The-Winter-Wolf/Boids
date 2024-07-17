@@ -17,7 +17,7 @@ public class Boid : MonoBehaviour
 
         // Выбрать случайную начальную скорость
         Vector3 vel = Random.onUnitSphere * Spawner.S.velocity;
-        rigid.velocity = vel;
+        rigid.linearVelocity = vel;
 
         LookAhead();
 
@@ -36,7 +36,7 @@ public class Boid : MonoBehaviour
 
     void LookAhead(){
         // Ориентировать птицу клювом в направлении полета
-        transform.LookAt(pos + rigid.velocity);
+        transform.LookAt(pos + rigid.linearVelocity);
     }
 
     public Vector3 pos {
@@ -46,7 +46,7 @@ public class Boid : MonoBehaviour
 
     // FixedUpdate вызывается при каждом пересчете физики (50 раз в секунду)
     private void FixedUpdate() {
-        Vector3 vel = rigid.velocity;
+        Vector3 vel = rigid.linearVelocity;
         Spawner spn = Spawner.S;
 
         // ПРЕДОТВРАЩЕНИЕ СТОЛКНОВЕНИЙ - избегать близких соседей
@@ -81,7 +81,8 @@ public class Boid : MonoBehaviour
 
         // Применить все скорости
         float fdt = Time.fixedDeltaTime;
-        if (velAvoid != Vector3.zero){
+        if (velAvoid != Vector3.zero)
+        {
             vel = Vector3.Lerp(vel, velAvoid, spn.collAvoid*fdt);
         } else {
             if (velAlign != Vector3.zero) {
@@ -102,7 +103,7 @@ public class Boid : MonoBehaviour
         // Установить vel в соответствии с velocity в объекте-одиночке Spawner
         vel = vel.normalized * spn.velocity;
         // Присвоить скорость компоненту Rigidbody
-        rigid.velocity = vel;
+        rigid.linearVelocity = vel;
         LookAhead();
     }
 }

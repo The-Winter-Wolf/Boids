@@ -6,6 +6,12 @@ public class LookAtAttractor : MonoBehaviour
 {
      void Update()
     {
+        // Выйти из приложения
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+
         transform.LookAt(Attractor.POS);       
     }
 }

@@ -61,7 +61,7 @@ public class Neighborhood : MonoBehaviour
                 return avg;
             }
             for (int i=0; i<neighbors.Count; i++){
-                avg += neighbors[i].rigid.velocity;
+                avg += neighbors[i].rigid.linearVelocity;
             }
             avg /= neighbors.Count;
             return avg;
